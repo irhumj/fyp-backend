@@ -64,7 +64,6 @@ def toggle_light():
         data = request.json
         home_id = data.get('home_id')
 
-        print(home_id)
         if not home_id:
             return jsonify({'error': 'Missing home_id'}), 400
 
@@ -75,10 +74,10 @@ def toggle_light():
             return jsonify({'error': 'Home not found'}), 404
 
         home_data = home.to_dict()
-        push_token = home_data.get('push_token', '')
+        # push_token = home_data.get('push_token', '')
 
-        if not push_token:
-            return jsonify({'error': 'No push token found'}), 404
+        # if not push_token:
+        #     return jsonify({'error': 'No push token found'}), 404
 
         current_light_status = home_data.get('light', False)
         new_light_status = not current_light_status
@@ -87,16 +86,15 @@ def toggle_light():
         home_ref.update({'light': new_light_status})
 
         # Send push notification
-        response = send_notification_util(
-            token=push_token,
-            title="Light Status",
-            body=f"The light has been turned {'ON' if new_light_status else 'OFF'}"
-        )
+        # response = send_notification_util(
+        #     token=push_token,
+        #     title="Light Status",
+        #     body=f"The light has been turned {'ON' if new_light_status else 'OFF'}"
+        # )
 
         return jsonify({
             'message': f'Light is now {"ON" if new_light_status else "OFF"}',
             'new_status': new_light_status,
-            'firebase_response': response
         }), 200
 
     except Exception as e:
