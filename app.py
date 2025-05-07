@@ -9,7 +9,7 @@ load_dotenv()
 
 # Initialize Flask app
 app = Flask(__name__)
-CORS(app, origins=['http://localhost:3000'])
+CORS(app, origins=['http://localhost:3000',"https://fyp-frontend-lake.vercel.app"])
 
 
 def create_keyfile_dict():
@@ -39,7 +39,7 @@ db = firestore.client()
 def index():
     return jsonify({'message': 'Flask + Firebase API is running!'})
 
-def send_notification_util(token, title, body, link='https://localhost:3000'):
+def send_notification_util(token, title, body, link='https://fyp-frontend-lake.vercel.app'):
     try:
         message = messaging.Message(
             notification=messaging.Notification(
