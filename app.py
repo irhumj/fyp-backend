@@ -64,6 +64,7 @@ def toggle_light():
         data = request.json
         home_id = data.get('home_id')
 
+        print(home_id)
         if not home_id:
             return jsonify({'error': 'Missing home_id'}), 400
 
