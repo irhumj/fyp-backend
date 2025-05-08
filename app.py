@@ -140,5 +140,18 @@ def simulate_prediction():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
+@app.route('/api/light-status/<home_id>', methods=['GET'])
+def get_light_status(home_id):
+    try:
+        doc = db.collection('Home').document(home_id).get()
+        if doc.exists:
+            light_status = doc.to_dict().get('light', False)
+            return jsonify({"light": light_status}), 200
+        else:
+            return jsonify({"error": "Home ID not found"}), 404
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
 if __name__ == '__main__':
     app.run(debug=True)
